@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.views import generic
 from .models import Book, Author, BookInstance, Genre
 
 def index(request):
@@ -31,3 +31,17 @@ def index(request):
     #render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
+class BookListView(generic.ListView):
+    model = Book
+    context_object_name = 'book_list'
+    # queryset = Book.objects.filter(title__icontains='the'[:3])
+    template_name = 'books/book_list.html'
+
+    def get_queryset(self):
+        return Book.objects.filter(title__icontains='the'[:3])
+    
+    def get_context_data(self, **kwargs):
+        context = super(BookListView, self).get_context_data(**kwargs)
+        context["some_data"] = "This is just some data"
+        return context
+    
