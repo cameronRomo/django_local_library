@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
+from django.shortcuts import get_object_or_404
 from .models import Book, Author, BookInstance, Genre
 
 def index(request):
@@ -34,14 +35,19 @@ def index(request):
 class BookListView(generic.ListView):
     model = Book
     context_object_name = 'book_list'
-    # queryset = Book.objects.filter(title__icontains='the'[:3])
     template_name = 'books/book_list.html'
 
     def get_queryset(self):
         return Book.objects.filter(title__icontains='the'[:3])
-    
+
     def get_context_data(self, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
         context["some_data"] = "This is just some data"
         return context
+
+class BookDetailView(generic.DetailView):
+    model = Book
     
+    def book_detail_view(self, request, primary_key):
+        book = get_object_or_404(Book, pk=primary_key)
+        return render(request, 'catalog/book_detail.html', context={'book': book})
