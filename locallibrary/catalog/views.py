@@ -35,8 +35,11 @@ def index(request):
 class BookListView(generic.ListView):
     model = Book
     context_object_name = 'book_list'
-    template_name = 'books/book_list.html'
     paginate_by  = 10
+
+class AuthorListView(generic.ListView):
+    model = Author
+    context_object_name = 'author_list'
 
 class BookDetailView(generic.DetailView):
     model = Book
@@ -44,3 +47,10 @@ class BookDetailView(generic.DetailView):
     def book_detail_view(self, request, primary_key):
         book = get_object_or_404(Book, pk=primary_key)
         return render(request, 'catalog/book_detail.html', context={'book': book})
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+
+    def author_detail_view(self, request, primary_key):
+        author = get_object_or_404(Author, pk=primary_key)
+        return render(request, 'catalog/author_detail.html', context={'author: author'})
