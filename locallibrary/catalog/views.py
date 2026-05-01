@@ -40,6 +40,7 @@ class BookListView(generic.ListView):
 class AuthorListView(generic.ListView):
     model = Author
     context_object_name = 'author_list'
+    paginate_by = 10
 
 class BookDetailView(generic.DetailView):
     model = Book
