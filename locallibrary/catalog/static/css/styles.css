@@ -4,6 +4,11 @@
   list-style: none;
 }
 
+.staff-nav>ul {
+  display: contents;
+  list-style-type: none;
+}
+
 #logout-form {
   display: inline;
 }
